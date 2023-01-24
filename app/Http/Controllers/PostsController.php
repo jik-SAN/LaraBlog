@@ -4,18 +4,20 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Facades\Auth;
 
 class PostsController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    public function __construct()
+    {
+        $this->middleware('auth', ['except' => ['index', 'show']]);
+    }
+
     public function index()
     {
         return view('blog.index')
-            ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
+        ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
     }
 
     /**
@@ -36,7 +38,25 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // dd($request->image->hashName());
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'required|mimes:jpg,jpeg,png|max:5048'
+        ]);
+
+        $request->file('image')->store('public');
+
+        Post::create([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image_path' => $request->image->hashName(),
+            'slug' => SlugService::CreateSlug(Post::class, 'slug', $request->title),
+            'user_id' => Auth::id(),
+        ]);
+
+        return to_route('blog.index')->with('message', 'Your post has been added.');
+
     }
 
     /**
@@ -45,9 +65,10 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
-        //
+        return view('blog.show')
+        ->with('post', Post::where('slug', $slug)->first());
     }
 
     /**
@@ -56,9 +77,10 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($slug)
     {
-        //
+        return view('blog.edit')
+        ->with('post', Post::where('slug', $slug)->first());
     }
 
     /**
@@ -68,9 +90,24 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $slug)
     {
-        //
+        $request->validate([
+            'title' => 'required',
+            'description' => 'required',
+            'image' => 'mimes:jpg,jpeg,png|max:5048'
+        ]);
+
+        $post = Post::where('slug',$slug)->firstOrFail();
+        $post->title = $request->title;
+        $post->description = $request->description;
+        if ($request->hasFile('image')) {
+            $request->file('image')->store('public');
+            $post->image_path = $request->image->hashName();
+        }
+        $post->save();
+        return to_route('blog.index')->with('message',
+            'Your post has been updated!');
     }
 
     /**
@@ -79,8 +116,11 @@ class PostsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy($slug)
     {
-        //
+        $post = Post::where('slug',$slug)->firstOrFail();
+        $post->delete();
+       return to_route('blog.index')->with('message',
+            'Your post has been deleted!');
     }
 }

@@ -13,23 +13,23 @@
 
       <!-- nav - start -->
       <nav class="hidden lg:flex gap-12">
-        <a href="{{ route('index') }}" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold transition duration-100">Home</a>
-        <a href="/blog" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold transition duration-100">Blog</a>
-        <a href="#" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold transition duration-100">About</a>
+        <a href="{{ route('index') }}" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">Home</a>
+        <a href="/blog" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">Blog</a>
+        <a href="#" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">About</a>
       </nav>
       <!-- nav - end -->
 
       <!-- buttons - start -->
       @guest
       <div class="hidden lg:flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-2.5 -ml-8">
-        <a href="{{ route('login') }}" class="inline-block focus-visible:ring ring-indigo-300 text-gray-100 hover:text-indigo-500 active:text-indigo-600 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-4 py-3">Login</a>
+        <a href="{{ route('login') }}" class="inline-block focus-visible:ring ring-indigo-300 text-gray-100 hover:text-indigo-500 active:text-indigo-600 text-sm md:text-base font-semibold text-center rounded-lg outline-none px-4 py-3">Login</a>
 
-        <a href="{{ route('register') }}" class="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-8 py-3">Register</a>
+        <a href="{{ route('register') }}" class="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none px-8 py-3">Register</a>
       </div>
       <!-- buttons - end -->
       @else
       <div class="hidden lg:flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-2.5 -ml-8">
-        <a href="#" class="inline-block focus-visible:ring ring-indigo-300 text-gray-100 hover:text-indigo-500 active:text-indigo-600 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-4 py-3">
+        <a href="#" class="inline-block border border-blue-500 text-gray-200 text-lg hover:text-indigo-500 active:text-indigo-600 md:text-base font-semibold text-center rounded-lg px-4 py-3">
           {{ Auth::user()->name }}
         </a>
 
@@ -40,7 +40,7 @@
           <a href="{{ route('logout') }}"
           onclick="event.preventDefault();
           this.closest('form').submit();"
-          class="inline-block focus-visible:ring ring-indigo-300 text-gray-100 hover:text-indigo-500 active:text-indigo-600 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-4 py-3">
+          class="inline-block border border-blue-500 focus-visible:ring ring-indigo-300 text-gray-100 hover:text-indigo-500 active:text-indigo-600 text-sm md:text-base font-semibold text-center rounded-lg outline-none transition duration-100 px-4 py-3">
             {{ __('Log Out') }}
           </a>
       </form>
