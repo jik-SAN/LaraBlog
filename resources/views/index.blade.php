@@ -72,12 +72,12 @@
 
     <div class="sm:grid grid-cols-2 w-4/5 m-auto">
         <div class="flex bg-yellow-700 text-gray-100 pt-1">
-            <div class="m-auto mb-6 pt-4 pb-13 sm:m-auto w-4/5 block">
+            <div class="m-auto mb-3 pt-2 pb-5 sm:m-auto w-4/5 block">
                 <span class="uppercase text-xs">
                     PHP
                 </span>
 
-                <h3 class="text-xl font-bold py-10">
+                <h3 class="text-xl font-bold py-5">
                     Lorem ipsum dolor, sit amet consectetur adipisicing elit. Voluptas necessitatibus dolorum error culpa laboriosam. Enim voluptas earum repudiandae consequuntur ad? Expedita labore aspernatur facilis quasi ex? Nemo hic placeat et?
                 </h3>
 

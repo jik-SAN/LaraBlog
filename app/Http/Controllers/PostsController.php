@@ -40,10 +40,12 @@ class PostsController extends Controller
     {
         // dd($request->image->hashName());
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|regex:/^[\s\w\d\.-]+$/',
             'description' => 'required',
             'image' => 'required|mimes:jpg,jpeg,png|max:5048'
-        ]);
+        ],
+        [       'title.regex' => 'Only letters, numbers, dashes and underscores.',
+            ]);
 
         $request->file('image')->store('public');
 
@@ -93,10 +95,12 @@ class PostsController extends Controller
     public function update(Request $request, $slug)
     {
         $request->validate([
-            'title' => 'required',
+            'title' => 'required|regex:/^[\s\w\d\.-]+$/',
             'description' => 'required',
             'image' => 'mimes:jpg,jpeg,png|max:5048'
-        ]);
+        ],
+        [       'title.regex' => 'Only letters, numbers, dashes and underscores.',
+            ]);
 
         $post = Post::where('slug',$slug)->firstOrFail();
         $post->title = $request->title;

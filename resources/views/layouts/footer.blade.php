@@ -51,19 +51,19 @@
 
         <nav class="flex flex-col gap-4">
           <div>
-            <a href="#" class="text-gray-400 hover:text-indigo-500 active:text-indigo-600 transition duration-100">Home</a>
+            <a href="{{ route('index') }}" class="text-gray-400 hover:text-indigo-500 active:text-indigo-600 transition duration-100">Home</a>
           </div>
 
           <div>
-            <a href="#" class="text-gray-400 hover:text-indigo-500 active:text-indigo-600 transition duration-100">Blog</a>
+            <a href="{{ route('blog.index') }}" class="text-gray-400 hover:text-indigo-500 active:text-indigo-600 transition duration-100">Blog</a>
           </div>
 
           <div>
-            <a href="#" class="text-gray-400 hover:text-indigo-500 active:text-indigo-600 transition duration-100">Login</a>
+            <a href="{{ route('login') }}" class="text-gray-400 hover:text-indigo-500 active:text-indigo-600 transition duration-100">Login</a>
           </div>
 
           <div>
-            <a href="#" class="text-gray-400 hover:text-indigo-500 active:text-indigo-600 transition duration-100">Register</a>
+            <a href="{{ route('register') }}" class="text-gray-400 hover:text-indigo-500 active:text-indigo-600 transition duration-100">Register</a>
           </div>
         </nav>
       </div>
