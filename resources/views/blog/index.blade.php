@@ -95,4 +95,7 @@
 </div>
 </div>
 @endforeach
+<div class="absolute flex right-0">
+{{ $posts->links() }}
+</div>
 </x-app-layout>

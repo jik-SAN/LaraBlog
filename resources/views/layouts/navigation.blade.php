@@ -12,7 +12,7 @@
       <!-- logo - end -->
 
       <!-- nav - start -->
-      <nav class="hidden lg:flex gap-10 flex absolute left-2/4">
+      <nav class="hidden lg:flex gap-8 flex absolute left-2/4">
         <a href="{{ route('index') }}" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">Home</a>
         <a href="/blog" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">Blog</a>
         <a href="#" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">About</a>
@@ -21,14 +21,15 @@
             Search
           </button>
           <div class="flex" x-show="open">
-    <form class="flex absolute right-0">
+    <form method="GET" action="{{ route('search') }}" class="flex absolute right-0">
       @csrf
     <label for="simple-search" class="sr-only">Search</label>
     <div class="relative w-full mt-6">
         <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
             <svg aria-hidden="true" class="w-5 h-5 text-gray-500 dark:text-gray-400" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd"></path></svg>
         </div>
-        <input type="text" id="simple-search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
+        <input type="text" name="search" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full pl-10 p-2.5  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" placeholder="Search" required>
+
     </div>
     <button type="submit" class="mt-6 p-2.5 ml-2 text-sm font-medium text-white bg-blue-700 rounded-lg border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
@@ -43,7 +44,7 @@
       <!-- buttons - start -->
       @guest
       <div class="hidden lg:flex flex-col sm:flex-row sm:justify-center lg:justify-start gap-2.5 -ml-8">
-        <a href="{{ route('login') }}" class="inline-block focus-visible:ring ring-indigo-300 text-gray-100 hover:text-indigo-500 active:text-indigo-600 text-sm md:text-base font-semibold text-center rounded-lg outline-none px-4 py-3">Login</a>
+        <a href="{{ route('login') }}" class="inline-block focus-visible:ring ring-indigo-300 text-gray-100 hover:text-indigo-500 active:text-indigo-600 text-lg md:text-base font-semibold text-center rounded-lg outline-none px-4 py-3">Login</a>
 
         <a href="{{ route('register') }}" class="inline-block bg-indigo-500 hover:bg-indigo-600 active:bg-indigo-700 focus-visible:ring ring-indigo-300 text-white text-sm md:text-base font-semibold text-center rounded-lg outline-none px-8 py-3">Register</a>
       </div>
@@ -59,10 +60,12 @@
         <div x-show="open" class="mr-2 opacity-100 absolute right-0 w-40 mt-4 py-0 bg-gray-700 rounded shadow-xl">
           <p class="h-6 font-bold bg-transparent rounded text-white text-center">{{ Auth::user()->name }}</p>
           <a href="#" class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-white">Dashboard</a>
-
-          <a href="#" class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-red-500">
-            Logout
-          </a>
+          <form action="{{ route('logout') }}" method="post">
+            @csrf
+          <button class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 w-full text-left bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-red-500">
+            {{ __('Logout') }}
+          </button>
+        </form>
         </div>
         <!-- // Dropdown Body -->
         @endguest

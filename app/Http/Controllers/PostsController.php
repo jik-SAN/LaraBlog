@@ -11,7 +11,7 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show']]);
+        $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
     }
 
     public function sanitize($request)
@@ -25,8 +25,9 @@ class PostsController extends Controller
 
     public function index()
     {
+        $posts = Post::orderBy('updated_at', 'DESC')->paginate(1);
         return view('blog.index')
-        ->with('posts', Post::orderBy('updated_at', 'DESC')->get());
+        ->with('posts', $posts);
     }
 
     /**
@@ -141,5 +142,19 @@ class PostsController extends Controller
 
        return to_route('blog.index')->with('message',
             'Your post has been deleted!');
+    }
+    public function search(Request $request)
+    {
+        $request->validate([
+            'search' => 'alpha_num',
+        ]);
+        $search = $request->search;
+        $posts = Post::query()
+            ->where('title', 'LIKE', "%".$search."%")
+            ->orWhere('description', 'LIKE', "%".$search."%")
+            ->paginate(1);
+            // dd($posts);
+        return view('blog.search')->with('posts', $posts);
+
     }
 }
