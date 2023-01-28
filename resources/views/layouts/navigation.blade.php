@@ -15,7 +15,7 @@
       <nav class="hidden lg:flex gap-8 flex absolute left-2/4">
         <a href="{{ route('index') }}" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">Home</a>
         <a href="/blog" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">Blog</a>
-        <a href="#" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">About</a>
+        <a href="/about" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">About</a>
         <div x-data="{ open: false }" x-on:click.outside="open = false">
           <button x-on:click="open = !open" class="text-gray-200 hover:text-indigo-500 active:text-indigo-700 text-lg font-semibold">
             Search
@@ -59,7 +59,7 @@
         </button>
         <div x-show="open" class="mr-2 opacity-100 absolute right-0 w-40 mt-4 py-0 bg-gray-700 rounded shadow-xl">
           <p class="h-6 font-bold bg-transparent rounded text-white text-center">{{ Auth::user()->name }}</p>
-          <a href="#" class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-white">Dashboard</a>
+          <a href="{{ route('profile.index', ['name' => Auth::user()->name, 'id' => Auth::id() ]) }}" class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-white">Profile</a>
           <form action="{{ route('logout') }}" method="post">
             @csrf
           <button class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 w-full text-left bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-red-500">

@@ -31,7 +31,8 @@ Route::middleware('auth')->group(function () {
 Route::get('/blog/search', [PostsController::class, 'search'])->name('search');
 Route::resource('/blog', PostsController::class);
 
-
+Route::get('/profile/{name}', [ProfileController::class, 'index'])->name('profile.index');
+Route::view('/about', 'about');
 
 
 

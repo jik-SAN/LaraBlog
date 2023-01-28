@@ -3,14 +3,30 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\View\View;
 
 class ProfileController extends Controller
 {
+    public function index(Request $request)
+    {
+
+        $data = User::where('id', $request->id)
+                ->first();
+        $data['post_no'] = DB::table('posts')
+                ->where('user_id', $request->id)
+                ->get()
+                ->count();
+                // dd($data);
+        return view('profile.index')->with('data', $data);
+    }
+
+
     /**
      * Display the user's profile form.
      */

@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Cviebrock\EloquentSluggable\Services\SlugService;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Uploadcare\Configuration;
+use \Uploadcare\Api;
 
 class PostsController extends Controller
 {
@@ -25,7 +27,7 @@ class PostsController extends Controller
 
     public function index()
     {
-        $posts = Post::orderBy('updated_at', 'DESC')->paginate(1);
+        $posts = Post::orderBy('updated_at', 'DESC')->paginate(5);
         return view('blog.index')
         ->with('posts', $posts);
     }
@@ -53,18 +55,21 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required|regex:/^[\s\w\d\.-]+$/|string|max:200|min:5',
             'description' => 'required|string|max:1000|min:10',
-            'image' => 'required|mimes:jpg,jpeg,png|max:5048'
+            'image' => 'required|mimes:jpg,jpeg,png|max:1048'
         ],
         [       'title.regex' => 'Only letters, numbers, dashes and underscores.',
-            ]);
+    ]);
 
-        $request->file('image')->store('public');
+
+        $configuration = Configuration::create(env('UPLOADCARE_PUBLIC_KEY'), env('UPLOADCARE_PRIVATE_KEY'));
+        $uploader = (new Api($configuration))->uploader();
+        $result = $uploader->fromPath($request->image, 'image/jpeg');
 
         Post::create([
             'title' => $request->title,
             'description' => $request->description,
-            'image_path' => $request->image->hashName(),
-            'slug' => SlugService::CreateSlug(Post::class, 'slug', $request->title),
+            'image_path' => $result->getOriginalFileUrl(),
+            'slug' => Str::slug($request->title),
             'user_id' => Auth::id(),
         ]);
 
@@ -110,19 +115,23 @@ class PostsController extends Controller
         $request->validate([
             'title' => 'required|regex:/^[\s\w\d\.-]+$/|string|max:200|min:5',
             'description' => 'required',
-            'image' => 'mimes:jpg,jpeg,png|max:5048'
+            'image' => 'mimes:jpg,jpeg,png|max:1048'
         ],
         [       'title.regex' => 'Only letters, numbers, dashes and underscores.',
-            ]);
+    ]);
 
         $post = Post::where('slug',$slug)->firstOrFail();
         $post->title = $request->title;
         $post->description = $request->description;
+
         if ($request->hasFile('image')) {
-            $request->file('image')->store('public');
-            $post->image_path = $request->image->hashName();
+            $configuration = Configuration::create(env('UPLOADCARE_PUBLIC_KEY'), env('UPLOADCARE_PRIVATE_KEY'));
+            $uploader = (new Api($configuration))->uploader();
+            $result = $uploader->fromPath($request->image, 'image/jpeg');
+            $post->image_path = $result->getOriginalFileUrl();
         }
 
+        $post->slug = Str::slug($request->title);
         $post->save();
 
         return to_route('blog.index')->with('message',
@@ -140,7 +149,8 @@ class PostsController extends Controller
         $post = Post::where('slug',$slug)->firstOrFail();
         $post->delete();
 
-       return to_route('blog.index')->with('message',
+
+        return to_route('blog.index')->with('message',
             'Your post has been deleted!');
     }
     public function search(Request $request)
@@ -150,9 +160,9 @@ class PostsController extends Controller
         ]);
         $search = $request->search;
         $posts = Post::query()
-            ->where('title', 'LIKE', "%".$search."%")
-            ->orWhere('description', 'LIKE', "%".$search."%")
-            ->paginate(1);
+        ->where('title', 'LIKE', "%".$search."%")
+        ->orWhere('description', 'LIKE', "%".$search."%")
+        ->paginate(5);
             // dd($posts);
         return view('blog.search')->with('posts', $posts);
 
