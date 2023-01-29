@@ -8,8 +8,6 @@ In the blog part of website logged in user can create, edit and delete their pos
 
 All inputs during creation and edit of posts are sanitized and validated.
 
-Wasted a lot of time setting up navigation panel.
-
 Little bit of alpine.js used for the user dropdown in navigation panel.
 
 No admin functionality yet.
