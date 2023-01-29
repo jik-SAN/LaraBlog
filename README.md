@@ -12,6 +12,6 @@ Wasted a lot of time setting up navigation panel.
 
 Little bit of alpine.js used for the user dropdown in navigation panel.
 
-No user dashboard or profile section and admin functionality yet.
+No admin functionality yet.
 
 For search query only characters and number are allowed, its a simple db query that searches through both title and content of all blog posts.

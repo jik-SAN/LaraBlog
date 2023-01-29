@@ -22,7 +22,7 @@ class ProfileController extends Controller
                 ->where('user_id', $request->id)
                 ->get()
                 ->count();
-                // dd($data);
+
         return view('profile.index')->with('data', $data);
     }
 

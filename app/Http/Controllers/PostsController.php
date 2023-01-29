@@ -18,8 +18,8 @@ class PostsController extends Controller
 
     public function sanitize($request)
     {
-        $request->title = filter_var($request->title, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES);
-        $request->description = filter_var($request->description, FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES);
+        $request->title = filter_var(strip_tags($request->title), FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES);
+        $request->description = filter_var(strip_tags($request->description), FILTER_SANITIZE_FULL_SPECIAL_CHARS, FILTER_FLAG_NO_ENCODE_QUOTES);
         /*similar to above but using htmlspecialchars
         $request->title = htmlspecialchars("$request->title", ENT_NOQUOTES, 'UTF-8');
         $request->description = htmlspecialchars("$request->description", ENT_NOQUOTES, 'UTF-8');*/
