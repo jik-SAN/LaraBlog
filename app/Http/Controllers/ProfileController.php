@@ -15,11 +15,14 @@ class ProfileController extends Controller
 {
     public function index(Request $request)
     {
+        $request->validate([
+            'name' => 'alpha_num',
+    ]);
 
-        $data = User::where('id', $request->id)
-                ->first();
+        $data = User::where('name', $request->name)
+                ->firstOrFail();
         $data['post_no'] = DB::table('posts')
-                ->where('user_id', $request->id)
+                ->where('user_id', $data['id'])
                 ->get()
                 ->count();
 

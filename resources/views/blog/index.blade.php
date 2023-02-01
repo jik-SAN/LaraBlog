@@ -33,7 +33,7 @@
 			{{ $post->title }}
 		</h2>
 		<span class="text-gray-500">
-			By <a href="{{ route('profile.index', ['name' => $post->user->name, 'id' => $post->user_id ]) }}" class="font-bold text-gray-800 hover:text-indigo-400">{{ $post->user->name }}</a>, Created on {{ date('jS M Y', strtotime($post->created_at)) }}
+			By <a href="{{ route('profile.index', ['name' => $post->user->name]) }}" class="font-bold text-gray-800 hover:text-indigo-400">{{ $post->user->name }}</a>, Created on {{ date('jS M Y', strtotime($post->created_at)) }}
 		</span>
 		<p class="text-xl text-gray-700 pt-8 pb-10 leading-8 font-light">
 			{{ Str::limit($post->description, 60) }}
