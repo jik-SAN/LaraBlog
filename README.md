@@ -12,6 +12,7 @@ Front page is just for show, no actual content there.
 </details>
 
 In the blog part of website logged in user can create, edit and delete their posts.
+An email is send to user when a new post is created.
 <details>
 <summary>Blog</summary>
 <picture>

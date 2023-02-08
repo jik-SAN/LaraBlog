@@ -2,10 +2,14 @@
 
 namespace App\Http\Controllers;
 
+
+use App\Mail\PostCreatedMail;
 use App\Models\Post;
+use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str;
 use Uploadcare\Configuration;
 use \Uploadcare\Api;
 
@@ -60,21 +64,24 @@ class PostsController extends Controller
         [       'title.regex' => 'Only letters, numbers, dashes and underscores.',
     ]);
 
+        if ($request->hasFile('image')) {
+            $configuration = Configuration::create(env('UPLOADCARE_PUBLIC_KEY'), env('UPLOADCARE_PRIVATE_KEY'));
+            $uploader = (new Api($configuration))->uploader();
+            $result = $uploader->fromPath($request->image, 'image/jpeg');
+        }
 
-        $configuration = Configuration::create(env('UPLOADCARE_PUBLIC_KEY'), env('UPLOADCARE_PRIVATE_KEY'));
-        $uploader = (new Api($configuration))->uploader();
-        $result = $uploader->fromPath($request->image, 'image/jpeg');
-
-        Post::create([
+        $post = Post::create([
             'title' => $request->title,
             'description' => $request->description,
             'image_path' => $result->getOriginalFileUrl(),
             'slug' => Str::slug($request->title),
             'user_id' => Auth::id(),
         ]);
+        $user = User::find(Auth::id());
+
+        Mail::to($user->email)->send(new PostCreatedMail($post, $user));
 
         return to_route('blog.index')->with('message', 'Your post has been added.');
-
     }
 
     /**

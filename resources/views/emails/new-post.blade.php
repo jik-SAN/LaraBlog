@@ -1,0 +1,1 @@
+<h2>{{ $name }} have created a new post {{ $title }}.</h2>
