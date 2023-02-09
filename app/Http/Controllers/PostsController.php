@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 
-use App\Mail\PostCreatedMail;
+use App\Events\NewPostCreated;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use Uploadcare\Configuration;
 use \Uploadcare\Api;
@@ -77,9 +76,10 @@ class PostsController extends Controller
             'slug' => Str::slug($request->title),
             'user_id' => Auth::id(),
         ]);
-        $user = User::find(Auth::id());
 
-        Mail::to($user->email)->send(new PostCreatedMail($post, $user));
+        $user = $post->user;
+
+        NewPostCreated::dispatch($post, $user);
 
         return to_route('blog.index')->with('message', 'Your post has been added.');
     }

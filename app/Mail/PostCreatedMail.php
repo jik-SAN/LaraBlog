@@ -35,7 +35,7 @@ class PostCreatedMail extends Mailable
     {
         return new Envelope(
             from: new Address('example@example.com', 'Admin'),
-            subject: 'Post Created Mail',
+            subject: 'New Post Created!',
         );
     }
 
