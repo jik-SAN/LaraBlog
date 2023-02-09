@@ -6,7 +6,7 @@
 			</h1>
 		</div>
 	</div>
-<p class="text-center text-red-500">@error('search') {{ $message }} @enderror</p>
+	<p class="text-center text-red-500">@error('search') {{ $message }} @enderror</p>
 	@if($posts->isNotEmpty())
 	@foreach($posts as $post)
 	<div class="sm:grid grid-cols-2 gap-20 w-2/3 mx-auto mt-0 pt-15 pb-24 border-b border-gray-200">
@@ -18,7 +18,7 @@
 				{{ $post->title }}
 			</h2>
 			<span class="text-gray-500">
-				By <a href="{{ route('profile.index', ['name' => $post->user->name]) }}" class="font-bold text-gray-800 hover:text-indigo-400">{{ $post->user->name }}</a>, Created on {{ date('jS M Y', strtotime($post->created_at)) }}
+				By <a href="{{ route('profile.index', ['name' => encrypt($post->user->name)]) }}" class="font-bold text-gray-800 hover:text-indigo-400">{{ $post->user->name }}</a>, Created on {{ date('jS M Y', strtotime($post->created_at)) }}
 			</span>
 			<p class="text-xl text-gray-700 pt-8 pb-10 leading-8 font-light">
 				{{ Str::limit($post->description, 60) }}

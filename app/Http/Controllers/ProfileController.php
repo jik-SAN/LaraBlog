@@ -15,6 +15,7 @@ class ProfileController extends Controller
 {
     public function index(Request $request)
     {
+       $request->name = decrypt($request->name);
         $request->validate([
             'name' => 'alpha_num',
     ]);

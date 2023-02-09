@@ -59,7 +59,7 @@
         </button>
         <div x-show="open" class="mr-2 opacity-100 absolute right-0 w-40 mt-4 py-0 bg-gray-700 rounded shadow-xl">
           <p class="h-6 font-bold bg-transparent rounded text-white text-center">{{ Auth::user()->name }}</p>
-          <a href="{{ route('profile.index', ['name' => Auth::user()->name, 'id' => Auth::id() ]) }}" class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-white">Profile</a>
+          <a href="{{ route('profile.index', ['name' => encrypt(Auth::user()->name)]) }}" class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-white">Profile</a>
           <form action="{{ route('logout') }}" method="post">
             @csrf
           <button class="transition-colors duration-200 block px-4 py-2 text-normal text-gray-200 w-full text-left bg-gray-700 rounded hover:font-bold hover:bg-black hover:text-red-500">
