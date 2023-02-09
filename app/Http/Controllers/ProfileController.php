@@ -19,14 +19,11 @@ class ProfileController extends Controller
             'name' => 'alpha_num',
     ]);
 
-        $data = User::where('name', $request->name)
+        $user = User::where('name', $request->name)
                 ->firstOrFail();
-        $data['post_no'] = DB::table('posts')
-                ->where('user_id', $data['id'])
-                ->get()
-                ->count();
+        $user['post_no'] = $user->post->count();
 
-        return view('profile.index')->with('data', $data);
+        return view('profile.index')->with('data', $user);
     }
 
 
