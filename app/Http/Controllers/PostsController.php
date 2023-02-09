@@ -17,7 +17,7 @@ class PostsController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('auth', ['except' => ['index', 'show', 'search']]);
+        $this->middleware(['auth', 'verified'], ['except' => ['index', 'show', 'search']]);
     }
 
     public function sanitize($request)

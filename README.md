@@ -12,6 +12,9 @@ Front page is just for show, no actual content there.
 </details>
 
 In the blog part of website logged in user can create, edit and delete their posts.
+
+Verification email is sent to registered users.
+
 An email is send to user when a new post is created.
 <details>
 <summary>Blog</summary>
@@ -37,7 +40,7 @@ All inputs during creation and edit of posts are sanitized and validated.
 
 Little bit of alpine.js used for the user dropdown in navigation panel.
 
-No email verification & admin functionality yet.
+No admin functionality yet.
 
 DB hosted on planetscale.com & user image uploads on uploadcare.com
 
