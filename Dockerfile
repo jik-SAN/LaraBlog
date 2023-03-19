@@ -1,5 +1,5 @@
 # Use the official PHP image as the base image
-FROM php:8.0.28-apache-bullseye
+FROM php:8.1.17-apache-bullseye
 
 # Copy the application files into the container
 COPY . /var/www/html
