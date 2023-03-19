@@ -40,7 +40,7 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install Laravel dependencies
 RUN composer install --optimize-autoloader --no-dev
-RUN php artisan key:generate && php artisan config:cache && php artisan route:cache && php artisan view:cache
+RUN php artisan key:generate && php artisan config:clear && php artisan route:cache && php artisan view:cache
 RUN npm install && npm run build && npm prune --production
 
 
