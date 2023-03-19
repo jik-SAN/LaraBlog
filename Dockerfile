@@ -18,7 +18,6 @@ RUN apt-get update && apt-get install -y \
     bcmath \
     bz2 \
     intl \
-    mbstring \
     opcache \
     pdo_mysql \
     zip \
