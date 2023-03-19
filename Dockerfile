@@ -4,11 +4,16 @@ FROM php:8.1.17-apache-bullseye
 # Copy the application files into the container
 COPY . /var/www/html
 
+RUN apt-get update && apt-get install -y curl
+RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
+RUN apt-get update && apt-get install -y nodejs
+
+
 # Set the working directory in the container
 WORKDIR /var/www/html
 
 # Install necessary PHP extensions
-RUN apt-get update && apt-get install -y \
+RUN apt-get install -y \
     libicu-dev \
     libzip-dev \
     libbz2-dev \
