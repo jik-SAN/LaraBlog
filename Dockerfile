@@ -4,7 +4,7 @@ FROM php:8.1.17-apache-bullseye
 # Copy the application files into the container
 COPY . /var/www/html
 
-RUN apt-get update && apt-get install -y curl
+#Install Node
 RUN curl -fsSL https://deb.nodesource.com/setup_lts.x | bash -
 RUN apt-get update && apt-get install -y nodejs
 
@@ -28,13 +28,18 @@ RUN apt-get install -y \
     zip \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
-    
+ 
+#Change Document root in apache config
 ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
+#create .env file to store APP_KEY
 ADD .env.example .env
-RUN ls * -lah && chmod -R 777 storage
+
+#Give access to storage dir
+RUN chmod -R 777 storage
+
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
 
