@@ -84,7 +84,7 @@ class PostsController extends Controller
 
         $user = $post->user;
 
-        NewPostCreated::dispatch($post, $user);
+        // NewPostCreated::dispatch($post, $user);
 
         return to_route('blog.index')->with('message', 'Your post has been added.');
     }

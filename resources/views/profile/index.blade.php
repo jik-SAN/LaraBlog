@@ -10,6 +10,11 @@
 </head>
 <body>
     <div class="h-full bg-gray-200 p-8">
+        <div class="absolute mb-3 mt-2">
+         <a class="bg-indigo-500 hover:shadow-xl rounded text-white p-2 mx-4 hover:bg-indigo-700" href="{{ url()->previous() }}">
+    <span>Back</span>
+        </a>
+    </div>
         @if(Auth::id() == $data['id'])
         <div x-data="{ openSettings: false }" class="absolute right-12 mt-4 rounded">
             <button @click="openSettings = !openSettings" class="border border-gray-400 p-2 rounded text-gray-300 hover:text-gray-300 bg-gray-100 bg-opacity-10 hover:bg-opacity-20" title="Settings">
@@ -45,6 +50,7 @@
    <!--  <div class="w-full h-[250px]">
         <img src="#" class="w-full h-full rounded-tl-lg rounded-tr-lg" alt="profile">
     </div> -->
+
     <div class="flex flex-col items-center -mt-20">
         <button>
            <div class="m-3 flex h-20 w-20 items-center justify-center rounded-full bg-green-200">
