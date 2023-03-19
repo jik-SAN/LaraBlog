@@ -11,6 +11,9 @@ WORKDIR /var/www/html
 RUN apt-get update && apt-get install -y \
     libicu-dev \
     libzip-dev \
+    libbz2-dev \
+    libmcrypt-dev \
+    libxslt-dev \
     && docker-php-ext-install \
     bcmath \
     bz2 \
