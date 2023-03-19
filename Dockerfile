@@ -28,6 +28,10 @@ RUN apt-get install -y \
     zip \
     && a2enmod rewrite \
     && rm -rf /var/lib/apt/lists/*
+    
+ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
 
 # Install composer
@@ -35,10 +39,9 @@ RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local
 
 # Install Laravel dependencies
 RUN composer install --optimize-autoloader --no-dev
-RUN php artisan config:cache && php artisan route:cache && php artisan view:cache
+RUN php artisan key:generate && php artisan config:cache && php artisan route:cache && php artisan view:cache
 RUN npm install && npm run build && npm prune --production
 
-#CMD ["php","artisan","serve","--host=0.0.0.0", "--port=80"]
 
 # Expose port 80
 EXPOSE 80
