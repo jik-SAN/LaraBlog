@@ -38,7 +38,7 @@ RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf
 ADD .env.example .env
 
 #Give access to storage dir
-RUN chmod -R 777 storage
+RUN chmod -R 755 storage
 
 # Install composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
